@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-genai-deployment
+  labels:
+    app: python-genai
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: python-genai
+  template:
+    metadata:
+      labels:
+        app: python-genai
+    spec:
+      containers:
+      - name: python-genai
+        image: python-genai-app:latest
+        imagePullPolicy: IfNotPresent # <--- ADD THIS LINE
+        ports:
+        - containerPort: 8081
+        env:
+        - name: PORT
+          value: "8081"
+        - name: LOG_LEVEL
+          value: "INFO"
+        - name: LLM_BASE_URL
+          valueFrom:
+            configMapKeyRef:
+              name: llm-config # Refers to the ConfigMap created above
+              key: LLM_BASE_URL
+        - name: LLM_MODEL_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: llm-config # Refers to the ConfigMap created above
+              key: LLM_MODEL_NAME
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-genai-service
+spec:
+  selector:
+    app: python-genai
+  ports:
+    - protocol: TCP
+      port: 8081 # The port on which this Kubernetes Service will be accessible within the cluster.
+      targetPort: 8081 # The port on the container to which the Service forwards traffic.
+  type: NodePort # This type exposes the service on a port on each node's IP. For Docker Desktop, it allows access from your host machine.
