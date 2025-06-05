@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: python-genai
-        image: python-genai-app:latest
+        image: python-genai-app:1.1
         imagePullPolicy: IfNotPresent # <--- ADD THIS LINE
         ports:
         - containerPort: 8081
