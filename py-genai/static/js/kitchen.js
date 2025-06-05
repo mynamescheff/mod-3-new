@@ -251,14 +251,15 @@ function determineAnimation() {
     return availableAnimations[Math.floor(Math.random() * availableAnimations.length)];
 }
 
+// Updated createAnimation function with fixed HTML structures
 function createAnimation(type) {
     cookingAnimationContainer.innerHTML = '';
-    
+
     const animationWrapper = document.createElement('div');
     animationWrapper.className = `animation-wrapper ${type}`;
-    
+
     switch(type) {
-        case 'pot-animation':
+        case 'pot-animation': // Unchanged, shown for context
             animationWrapper.innerHTML = `
                 <div class="pot">
                     <div class="pot-top"></div>
@@ -268,49 +269,67 @@ function createAnimation(type) {
                 <div class="steam steam-3"></div>
             `;
             break;
-            
+
         case 'toaster-animation':
+            // Updated toaster animation
             animationWrapper.innerHTML = `
                 <div class="toaster">
                     <div class="toaster-slot"></div>
                 </div>
-                <div class="bread bread-1"></div>
-                <div class="bread bread-2"></div>
+                <div class="bread bread-initial"></div>
+                <div class="bread bread-toasted"></div>
             `;
             break;
-            
+
         case 'blender-animation':
+            // Updated blender animation
             animationWrapper.innerHTML = `
                 <div class="blender">
                     <div class="blender-base"></div>
                     <div class="blender-jar">
-                        <div class="blade-container">
-                            <div class="blade blade-1"></div>
-                            <div class="blade blade-2"></div>
+                        <div class="blade-assembly">
+                            <div class="blade blade-vertical"></div>
+                            <div class="blade blade-horizontal"></div>
                         </div>
                     </div>
                     <div class="blender-top"></div>
                 </div>
             `;
             break;
-            
+
         case 'microwave-animation':
+            // Updated microwave animation
             animationWrapper.innerHTML = `
                 <div class="microwave">
                     <div class="microwave-door">
                         <div class="microwave-window">
-                            <div class="cup"></div>
+                            <div class="cup-turntable">
+                                <div class="cup-3d">
+                                    <div class="cup-side cup-front"></div>
+                                    <div class="cup-side cup-back"></div>
+                                    <div class="cup-side cup-left"></div>
+                                    <div class="cup-side cup-right"></div>
+                                    <div class="cup-side cup-top"></div>
+                                    <div class="cup-side cup-bottom"></div>
+                                    <div class="cup-handle-3d"></div>
+                                </div>
+                                <div class="steam-particle steam-1"></div>
+                                <div class="steam-particle steam-2"></div>
+                                <div class="steam-particle steam-3"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="microwave-controls"></div>
-                    <div class="microwave-light"></div>
                 </div>
             `;
             break;
     }
-    
+
     cookingAnimationContainer.appendChild(animationWrapper);
 }
+
+// Rest of the JavaScript remains the same - just copy the existing code
+// This is only the updated createAnimation function that needed changes
 
 async function getSuggestion() {
     if (selectedIngredients.size < 2) {
